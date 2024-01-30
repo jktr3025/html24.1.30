@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* border: 1px solid royalblue; */
+        }
+        ul,ol,li{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+            color: inherit;
+            /* width: 200px;
+            height: 300px; */
+        }
+        ul{
+            width: 1200px;
+            margin: 50px auto;
+        }
+        .clear_fix::before,
+        .clear_fix::after{
+            content: "";
+            display: block;
+            clear: both;
+        }
+        .box1{
+            border: 1px solid tomato;
+            text-align: center;
+        }
+        .box1 li{
+            display: inline-block;
+            border: 1px solid red;
+
+        }
+        .box1 li a{
+            height: 50px;
+            line-height: 50px;
+        }
+
+/* 인라인 블록은 
+넓이, 높이 지정이 가능한 블록과 옆으로 자동으로 붙는 인라인의 속성을 가져오지만
+자동으로 5px여백을 가져오기 때문에
+동일한 넓이로 가운데 몰아주려면 계산이 필요함
+
+부모에 teat-align : center; 주면 중앙 정렬됨 */
+
+
+
+        .box2{
+            border: 1px saddlebrown solid;
+        }
+        .box2 li{
+            float: left;
+            width: calc(100% / 5);
+        }
+        .box2 li a{
+            display: block;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+/* 
+float: left;는 여백을 안 가져오지만
+나의 넓이, 부모 높이가 사라지고, 
+밑의 내용이 치고 올라옴
+클리어 픽스 등을 만들어서 따라 오지 못하도록 해줘야함
+ */
+        .box3{
+            border: 1px solid royalblue;
+            display: flex;
+            height: 100px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .box3 li{
+            border: 1px solid red;
+            width: calc(100% / 5 - 20px);
+        }
+        .box3 li a{
+            background-color: yellow;
+            display: block;
+            height: 50px;
+            line-height: 50px;
+        }
+/* 
+부모에 flex 준다
+flex 방향, 정렬 등 다양하게 바꿀 수 있음
+space-around, space-between으로 높이를 정확히 몰라도 균등분할이 가능함
+flex-direction에 따라 justify-content 와 
+align-items( 여러 줄이면align-content)도 방향이 달라짐
+*/
+.box4{
+            border: 1px solid royalblue;
+            display: flex;
+        }
+        
+        .box4 li{
+            border: 1px solid royalblue;
+            /* flex-basis: auto; 기본값 - 늘어날 떄 자기 넓이 만큼만 내용을 가져감*/
+            /* flex-basis: 0; 넓이에 관계없이 같은 비율로 늘어남 */
+            /* flex-basis: 50%; */
+            /* flex-basis: 300px; */
+            /* flex-basis: 10rem; */
+            /* flex-basis: content; */
+            /* flex-basis: 80px; */
+            /* flex-grow: 1; */
+            /* flex-shrink: 1; 기본값 - 줄어들때의 비율 */
+            
+            flex: 1;
+            /* flex-grow: 1;
+            flex-shrink: 1;
+            flex-basis: 0; */
+
+            /* flex: 1 500px ; */
+            
+            /* flex: 1 1 auto; */
+            /* auto는 생략가능  */
+        }
+        .box4 li:nth-child(1){
+            /* flex-grow: 1; */
+        }
+        .box4 li:nth-child(2){
+            /* flex-grow: 2; */
+        }
+        .box4 li:nth-child(3){
+            /* flex-grow: 1; */
+        }
+        .box4 li a{}
+
+        .box5{
+            display: grid;
+            border: 1px solid rebeccapurple;
+            /* grid-template-columns: 50% 50%; */
+            /* grid-template-columns: 200px auto; */
+            /* grid-template-columns: 1fr 1fr; */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px ;
+        }
+        .box5 li{
+            border: 1px solid darkblue;
+        }
+        .box5 li a{}
+
+        .gr5{
+            /* grid-column-start: 1;
+            grid-column-end: 3;
+            grid-row-start: 3;
+            grid-row-end: 4; */
+            grid-column:1/3 ;
+            grid-row:3/4 ;
+            /* grid-row:3/span 2 ; */
+        }
+
+        .gr6{
+            grid-column:1/span 2 ;
+            grid-row:4/5 ;
+        }
+
+        .clock{
+            display: grid;
+            width: 500px;
+            height: 500px;
+            border: 1px solid rebeccapurple;
+            /* grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(7, 1fr); */
+            grid-template-areas:
+            ". . . n12 . . ."
+            ". . n11 . n1 . ."
+            ". n10 . . . n2 ."
+            "n9 . . . . . n3"
+            ". n8 . . . n4 ."
+            ". . n7 . n5 . ."
+            ". . . n6 . . ."
+            ;
+        }
+
+        .clock li{}
+
+        .h1{grid-area: n1;
+            
+        }
+        .h2{grid-area: n2;}
+        .h3{grid-area: n3;}
+        .h4{grid-area: n4;}
+        .h5{grid-area: n5;}
+        .h6{grid-area: n6;}
+        .h7{grid-area: n7;}
+        .h8{grid-area: n8;}
+        .h9{grid-area: n9;}
+        .h10{grid-area: n10;}
+        .h11{grid-area: n11;}
+        .h12{grid-area: n12;
+            align-self: center;            
+        }
+
+    </style>
+</head>
+<body>
+    <ul class="box1 inline-block">
+        <li><a href="#">menu1</a></li>
+        <li><a href="#">menu2</a></li>
+        <li><a href="#">menu3</a></li>
+        <li><a href="#">menu4</a></li>
+        <li><a href="#">menu5</a></li>
+    </ul><!-- box1 -->
+
+    <ul class="box2 float clear_fix">
+        <li><a href="#">menu1</a></li>
+        <li><a href="#">menu2</a></li>
+        <li><a href="#">menu3</a></li>
+        <li><a href="#">menu4</a></li>
+        <li><a href="#">menu5</a></li>
+    </ul><!-- box2 -->
+
+    <ul class="box3 flex">
+        <li><a href="#">menu1</a></li>
+        <li><a href="#">menu2</a></li>
+        <li><a href="#">menu3</a></li>
+        <li><a href="#">menu4</a></li>
+        <li><a href="#">menu5</a></li>
+    </ul><!-- box3 -->
+
+    <ul class="box4 flex">
+        <li><a href="#">menu1menu1 </a></li>
+        <li><a href="#">menu2menu2menu2</a></li>
+        <li><a href="#">menu3menu3menu3</a></li>
+    </ul><!-- box4 -->
+
+    <ul class="box5 grid">
+        <li class="gr1"><a href="#">menu1menu1 </a></li>
+        <li class="gr2"><a href="#">menu2menu2menu2</a></li>
+        <li class="gr3"><a href="#">menu3menu3menu3</a></li>
+        <li class="gr4"><a href="#">menu1menu1 </a></li>
+        <li class="gr5"><a href="#">menu2menu2menu2</a></li>
+        <li class="gr6"><a href="#">menu3menu3menu3</a></li>
+    </ul><!-- box5 -->
+    
+    <ul class="clock">
+        <li class="h1">1</li>
+        <li class="h2">2</li>
+        <li class="h3">3</li>
+        <li class="h4">4</li>
+        <li class="h5">5</li>
+        <li class="h6">6</li>
+        <li class="h7">7</li>
+        <li class="h8">8</li>
+        <li class="h9">9</li>
+        <li class="h10">10</li>
+        <li class="h11">11</li>
+        <li class="h12">12</li>
+    </ul><!-- clock -->
+</body>
+</html>
